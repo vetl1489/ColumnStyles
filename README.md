@@ -48,10 +48,17 @@ When autowidths are set for one or more columns, the preset value is ignored. Ap
 
 The number of columns displayed in the script when reading a table or selecting a style depends on the screen resolution. The group into which panel cells are added to edit each of the columns takes a maximum size of ~90-99% (depending on the version of InDesign) of the screen width (or the total screen width, if there are several). With FullHD screen resolution (width 1980 px), the maximum number of columns displayed is 23.
 
-To change the number of columns displayed, you need to change `Sizes.UI_COLUMN_WIDTH` and `Sizes.UI_COLUMN_MARGIN`. Less value - already cell-panels, more columns are displayed.
+To change the number of columns displayed, you need to change `UI.COLUMN_WIDTH` and `UI.COLUMN_MARGIN`. Less value - already cell-panels, more columns are displayed.
 
-`Sizes.UI_COLUMN_PANEL_COUNT` allows you to customize the visible number of columns.
+`UI.COLUMN_PANEL_COUNT` allows you to customize the visible number of columns.
 
 ---
 
 The script was tested on InDesign CS5-2023.
+
+## Changelog
+
+### v. 1.1
+
+- The code for working with configuration files has been rewritten.
+- Various minor fixes.
