@@ -1,4 +1,4 @@
-// ColumnStyles.jsx v. 1.0
+// ColumnStyles.jsx v. 1.1
 // © vetl1489, Vitaly Shutikov
 // vetl1489@gmail.com
 // Adobe InDesign Script. 
@@ -117,31 +117,31 @@ var Script = {
   NAME: "ColumnStyles", 
   COPY: "© vetl1489",
   AUTHOR: "Vitaly Shutikov",
-  VERSION: "v. 1.0",
+  VERSION: "v. 1.1",
   TYPE_FILE: "*.cstyle",
   CONFIG_FILE: new File(getScriptFolderPath() + "/ColumnStyles.conf")
 };
 
 // Размеры UI
-var Sizes = {
-  UI_TEXT_HEIGHT: 15, // высота statictext
-  UI_EDIT_HEIGHT: 22, // высота edittext
-  UI_BUTTON_SIZE: 25, // размер кнопки
+var UI = {
+  TEXT_HEIGHT: 15, // высота statictext
+  EDIT_HEIGHT: 22, // высота edittext
+  BUTTON_SIZE: 25, // размер кнопки
   
-  UI_TABLE_PANEL_WIDTH: 340, // ширина панели с таблицей
-  UI_TABLE_PANEL_HEIGHT: 195, // высота панели с таблицей
-  UI_TABLE_COLUMN_WIDTH: [235, 70], // размеры колонок таблицы
+  TABLE_PANEL_WIDTH: 340, // ширина панели с таблицей
+  TABLE_PANEL_HEIGHT: 195, // высота панели с таблицей
+  TABLE_COLUMN_WIDTH: [235, 70], // размеры колонок таблицы
 
-  UI_COLUMN_WIDTH: 73, // ширина колонки
-  UI_COLUMN_MARGIN: 5, // отступ внутри колонки
-  UI_COLUMN_ITEMS_SPACING: 10, // отступ внутри колонки между элементами
+  COLUMN_WIDTH: 73, // ширина колонки
+  COLUMN_MARGIN: 5, // отступ внутри колонки
+  COLUMN_ITEMS_SPACING: 10, // отступ внутри колонки между элементами
   
-  UI_SCROLL_GROUP_SPACING: 5, // расстояние между колонками columnsScrollGroup
-  UI_SCROLL_GROUP_HEIGHT: 97, // высота скролл-группы
-  UI_COLUMN_PANEL_MARGIN: 10, // отступ внутри панели с колонками
-  UI_COLUMN_PANEL_COUNT: 5, // количество видимых колонок
-  UI_SCROLL_HEIGHT: 20, // высота скроллбара
-  UI_NEW_NAME_WIDTH: 150, // ширина поля ввода имени
+  SCROLL_GROUP_SPACING: 5, // расстояние между колонками columnsScrollGroup
+  SCROLL_GROUP_HEIGHT: 97, // высота скролл-группы
+  COLUMN_PANEL_MARGIN: 10, // отступ внутри панели с колонками
+  COLUMN_PANEL_COUNT: 5, // количество видимых колонок
+  SCROLL_HEIGHT: 20, // высота скроллбара
+  NEW_NAME_WIDTH: 150, // ширина поля ввода имени
 };
 
 // считываем конфиг
@@ -202,15 +202,15 @@ var window = new Window("palette", ", ".join(Script.NAME, Script.COPY, Script.VE
 // Левая колонка
 var column1 = window.add("group");
   column1.orientation = "column";
-  column1.margins = Sizes.UI_COLUMN_PANEL_MARGIN;
+  column1.margins = UI.COLUMN_PANEL_MARGIN;
 
 // Панель со стилями
 var columnStylesPanel = column1.add("panel");
   columnStylesPanel.text = localize(Lang.STYLE_PANEL_HEAD);
   columnStylesPanel.orientation = "column";
-  columnStylesPanel.margins = Sizes.UI_COLUMN_PANEL_MARGIN;
-  columnStylesPanel.margins.right = Sizes.UI_COLUMN_PANEL_MARGIN * 6;
-  columnStylesPanel.maximumSize.width = Sizes.UI_TABLE_PANEL_WIDTH;
+  columnStylesPanel.margins = UI.COLUMN_PANEL_MARGIN;
+  columnStylesPanel.margins.right = UI.COLUMN_PANEL_MARGIN * 6;
+  columnStylesPanel.maximumSize.width = UI.TABLE_PANEL_WIDTH;
 
 // Таблица стилей
 var columnStylesTable = columnStylesPanel.add(
@@ -220,12 +220,12 @@ var columnStylesTable = columnStylesPanel.add(
         localize(Lang.STYLE_TABLE_NAME),
         localize(Lang.STYLE_TABLE_COLUMNS)
       ],
-      columnWidths: Sizes.UI_TABLE_COLUMN_WIDTH
+      columnWidths: UI.TABLE_COLUMN_WIDTH
     }
   );
   columnStylesTable.preferredSize = [
-    Sizes.UI_TABLE_PANEL_WIDTH - Sizes.UI_COLUMN_PANEL_MARGIN * 2,
-    Sizes.UI_TABLE_PANEL_HEIGHT
+    UI.TABLE_PANEL_WIDTH - UI.COLUMN_PANEL_MARGIN * 2,
+    UI.TABLE_PANEL_HEIGHT
   ];
 
 // сразу заполняем ее
@@ -237,15 +237,15 @@ updateCounter(columnStylesPanel, "styles", styleList);
 // Группа с кнопками управления стилями колонок
 var styleButtonsGroup = addButtonGroup(
   columnStylesPanel, undefined, 
-  Sizes.UI_TABLE_PANEL_WIDTH - Sizes.UI_COLUMN_PANEL_MARGIN * 2,
+  UI.TABLE_PANEL_WIDTH - UI.COLUMN_PANEL_MARGIN * 2,
   {alignChildren: "left", alignment: "fill"}
 );
 
 // Кнопки управления таблицей стилей
 var loadFileButton = addButton(styleButtonsGroup, localize(Lang.OPEN_FILE_BUTTON), 70);
 var saveFileButton = addButton(styleButtonsGroup, localize(Lang.SAVE_FILE_BUTTON), 80);
-var upStyleButton = addButton(styleButtonsGroup, localize(Lang.UP_BUTTON), Sizes.UI_BUTTON_SIZE);
-var downStyleButton = addButton(styleButtonsGroup, localize(Lang.DOWN_BUTTON), Sizes.UI_BUTTON_SIZE);
+var upStyleButton = addButton(styleButtonsGroup, localize(Lang.UP_BUTTON), UI.BUTTON_SIZE);
+var downStyleButton = addButton(styleButtonsGroup, localize(Lang.DOWN_BUTTON), UI.BUTTON_SIZE);
 var clearStyleButton = addButton(styleButtonsGroup, localize(Lang.CLEAR_BUTTON), 75);
 
 
@@ -253,31 +253,31 @@ var clearStyleButton = addButton(styleButtonsGroup, localize(Lang.CLEAR_BUTTON),
 // Правая колонка
 var column2 = window.add("group");
   column2.orientation = "column";
-  column2.margins = Sizes.UI_COLUMN_PANEL_MARGIN;
+  column2.margins = UI.COLUMN_PANEL_MARGIN;
 
 // Панель с колонками и scrollbar
 var columnPanel = column2.add("panel");
   columnPanel.text = localize(Lang.COLUMNS_PANEL_HEAD);
   columnPanel.orientation = "column";
   columnPanel.alignChildren = "left";
-  columnPanel.margins = Sizes.UI_COLUMN_PANEL_MARGIN;
-  columnPanel.maximumSize.width = getWidthScrollGroup(Sizes.UI_COLUMN_PANEL_COUNT) + Sizes.UI_COLUMN_PANEL_MARGIN * 2;
-  columnPanel.minimumSize.width = getWidthScrollGroup(Sizes.UI_COLUMN_PANEL_COUNT) + Sizes.UI_COLUMN_PANEL_MARGIN * 2;
+  columnPanel.margins = UI.COLUMN_PANEL_MARGIN;
+  columnPanel.maximumSize.width = getWidthScrollGroup(UI.COLUMN_PANEL_COUNT) + UI.COLUMN_PANEL_MARGIN * 2;
+  columnPanel.minimumSize.width = getWidthScrollGroup(UI.COLUMN_PANEL_COUNT) + UI.COLUMN_PANEL_MARGIN * 2;
 
 // Группа с колонками 
 var columnsScrollGroup = columnPanel.add("group");
   columnsScrollGroup.orientation = "row";
-  // columnsScrollGroup.preferredSize.height = Sizes.UI_SCROLL_GROUP_HEIGHT;
+  // columnsScrollGroup.preferredSize.height = UI.SCROLL_GROUP_HEIGHT;
   columnsScrollGroup.preferredSize.height = 97;
   columnsScrollGroup.preferredSize.width = getWidthScrollGroup(5);
-  columnsScrollGroup.spacing = Sizes.UI_SCROLL_GROUP_SPACING;
+  columnsScrollGroup.spacing = UI.SCROLL_GROUP_SPACING;
 
 // scrollbar колонок таблицы
 var scrollBar = columnPanel.add("scrollbar");
   scrollBar.orientation = "horizontal";
   scrollBar.size = [
-    getWidthScrollGroup(Sizes.UI_COLUMN_PANEL_COUNT), 
-    Sizes.UI_SCROLL_HEIGHT
+    getWidthScrollGroup(UI.COLUMN_PANEL_COUNT), 
+    UI.SCROLL_HEIGHT
   ];
   scrollBar.enabled = false;
   scrollBar.visible = false; // прячем scrollbar на CS5
@@ -298,8 +298,8 @@ var saveStyleButton = addButton(saveStyleButtonsGroup, localize(Lang.SAVE_STYLE_
 // Новое имя
 var newStyleName = saveStyleButtonsGroup.add("edittext");
 newStyleName.preferredSize = [
-  Sizes.UI_NEW_NAME_WIDTH, 
-  Sizes.UI_EDIT_HEIGHT
+  UI.NEW_NAME_WIDTH, 
+  UI.EDIT_HEIGHT
 ];
 // Кнопка "Удалить стиль"
 var deleteStyleButton = addButton(saveStyleButtonsGroup, localize(Lang.DELETE_STYLE_BUTTON));
@@ -307,7 +307,7 @@ var deleteStyleButton = addButton(saveStyleButtonsGroup, localize(Lang.DELETE_ST
 // Группа кнопок Считать, Применить
 var tableButtonsGroup = addButtonGroup(
   column2, undefined, 
-  Sizes.UI_TABLE_PANEL_WIDTH - Sizes.UI_COLUMN_PANEL_MARGIN * 2,
+  UI.TABLE_PANEL_WIDTH - UI.COLUMN_PANEL_MARGIN * 2,
   {alignment: "left"});
 // Кнопка "Считать" таблицу в текущий стиль
 var readTableButton = addButton(tableButtonsGroup, localize(Lang.READ_TABLE_BUTTON));
@@ -328,7 +328,7 @@ window.show();
  */
 function addButton(target, name, width) {
   var button = target.add("button", undefined, name);
-  button.preferredSize.height = Sizes.UI_BUTTON_SIZE;
+  button.preferredSize.height = UI.BUTTON_SIZE;
   if (width) {
     button.preferredSize.width = width;
   }
@@ -347,7 +347,7 @@ function addButtonGroup(target, orient, width, property) {
   group.orientation = orient === "column" ? orient : "row";
   group.margins = 0;
   if (group.orientation === "row") {
-    group.preferredSize.height = Sizes.UI_BUTTON_SIZE;
+    group.preferredSize.height = UI.BUTTON_SIZE;
   }
   if (width) {
     group.preferredSize.width = width;
@@ -368,23 +368,23 @@ function addButtonGroup(target, orient, width, property) {
  * @returns {object} - возвращает объект с UI элементами для редактирования.
  */
 function addControlColumn(target, item, currentWidth, editWidth, auto) {
-  var ITEM_WIDTH = Sizes.UI_COLUMN_WIDTH - Sizes.UI_COLUMN_MARGIN * 2;
+  var ITEM_WIDTH = UI.COLUMN_WIDTH - UI.COLUMN_MARGIN * 2;
 
   var columnPanel = target.add("panel");
   columnPanel.text = item;
   columnPanel.orientation = "column";
-  columnPanel.preferredSize = [Sizes.UI_COLUMN_WIDTH, Sizes.UI_COLUMN_WIDTH];
-  columnPanel.margins = Sizes.UI_COLUMN_MARGIN;
+  columnPanel.preferredSize = [UI.COLUMN_WIDTH, UI.COLUMN_WIDTH];
+  columnPanel.margins = UI.COLUMN_MARGIN;
   columnPanel.margins.top = 10;
-  columnPanel.spacing = Sizes.UI_COLUMN_ITEMS_SPACING;
+  columnPanel.spacing = UI.COLUMN_ITEMS_SPACING;
 
   var currentWidthLine = columnPanel.add("statictext");
   currentWidthLine.text = parseFloat(currentWidth).toFixed(3);
-  currentWidthLine.preferredSize = [ITEM_WIDTH, Sizes.UI_TEXT_HEIGHT];
+  currentWidthLine.preferredSize = [ITEM_WIDTH, UI.TEXT_HEIGHT];
 
   var inputFieldWidth = columnPanel.add("edittext");
   inputFieldWidth.text = editWidth ? parseFloat(editWidth).toFixed(3) : parseFloat(currentWidth).toFixed(3);
-  inputFieldWidth.preferredSize = [ITEM_WIDTH, Sizes.UI_EDIT_HEIGHT];
+  inputFieldWidth.preferredSize = [ITEM_WIDTH, UI.EDIT_HEIGHT];
 
   inputFieldWidth.onChange = function () {
     currentStyle = updateStyle(currentStyle.id);
@@ -392,7 +392,7 @@ function addControlColumn(target, item, currentWidth, editWidth, auto) {
 
   var checkAuto = columnPanel.add("checkbox", undefined, localize(Lang.CHECK_AUTO));
   checkAuto.value = auto ? true : false;
-  checkAuto.preferredSize = [ITEM_WIDTH, Sizes.UI_TEXT_HEIGHT];
+  checkAuto.preferredSize = [ITEM_WIDTH, UI.TEXT_HEIGHT];
 
   checkAuto.onClick = function () {
     currentStyle = updateStyle(currentStyle.id);
@@ -403,11 +403,21 @@ function addControlColumn(target, item, currentWidth, editWidth, auto) {
     currentWidth: currentWidthLine,
     editWidth: inputFieldWidth,
     auto: checkAuto,
-  }
+  };
 }
 
 // ============================================
 // Конструкторы
+/**
+ * Конструктор объекта конфиг файла.
+ * @param {Array} styleList - массив стилей.
+ */
+function Config(styleList) {
+  this.type = "ColumnStylesConfig";
+  this.windowLocation = styleList !== undefined ? [window.location[0], window.location[1]] : null;
+  this.styleList = styleList !== undefined ? styleList : [];
+}
+
 /**
  * Конструктор одиночной колонки.
  * @param {String} item - номер колонки,
@@ -525,7 +535,7 @@ function getSingleColumnList() {
  * @returns {Number} - ширина группы в px.
  */
 function getWidthScrollGroup(cellCount) {
-  return (Sizes.UI_COLUMN_WIDTH + 4) * cellCount + Sizes.UI_SCROLL_GROUP_SPACING * (cellCount - 1) + 3;
+  return (UI.COLUMN_WIDTH + 4) * cellCount + UI.SCROLL_GROUP_SPACING * (cellCount - 1) + 3;
 }
 
 /**
@@ -646,12 +656,8 @@ function convertUnit(value, units, outUnits) {
  * @param {Object} newConfig - объект конфигурации. 
  */
 function saveConfig(file, newConfig) {
-  var defaultConfig = {
-    windowLocation: null,
-    styleList: [],
-  };
-
   if (newConfig === undefined) {
+    var defaultConfig = new Config();
     saveFile(file, defaultConfig.toSource());
   } else {
     var lastConfig = eval(readFile(file));
@@ -662,37 +668,15 @@ function saveConfig(file, newConfig) {
 }
 
 /**
- * Получаем путь к папке, где расположен скрипт, 
- * учитывая возможность запуска из ExtendScript Debugger.
- * @return {String} путь к папке в виде строки.
- */
-function getScriptFolderPath() {
-  try {
-    // при запуске в отладчике, возникает исключение 
-    return app.activeScript.path;
-  }
-  catch (error) {
-    return File(error.fileName).path;
-  }
-}
-
-/**
  * Читаем файл конфигурации.
  * @param {File} file - файл конфигурации.
  * @return {Object} конфигурация. 
  */
 function readConfig(file) {
-  var defaultConfig = {
-    windowLocation: null,
-    styleList: [],
-  };
-
   var read = eval(readFile(file));
   // простейшая валидация настроек
-  if (typeof read !== "object" ||
-    !(read.hasOwnProperty("windowLocation") &&
-      read.hasOwnProperty("styleList"))) {
-    read = defaultConfig;
+  if (typeof read !== "object" || !read.hasOwnProperty("type") || read.type !== "ColumnStylesConfig") {
+    read = new Config(); // конфиг по умолчанию
     saveConfig(file);
   }
   return read;
@@ -719,6 +703,21 @@ function readFile(file) {
   var content = file.read();
   file.close();
   return content;
+}
+
+/**
+ * Получаем путь к папке, где расположен скрипт, 
+ * учитывая возможность запуска из ExtendScript Debugger.
+ * @return {String} путь к папке в виде строки.
+ */
+function getScriptFolderPath() {
+  try {
+    // при запуске в отладчике, возникает исключение 
+    return app.activeScript.path;
+  }
+  catch (error) {
+    return File(error.fileName).path;
+  }
 }
 
 /**
@@ -760,14 +759,14 @@ function applyStyle(table) {
   } else {
     var autoWidth = 0;
   }
-
+  // проходим по всем колонкам и устанавливаем ширину
   for (i = 0; i < columns.length; i++) {
+    // Если колонок меньше чем, чем стиле, выходим из цикла
     if (currentStyle.length === i) break;
 
     if (!currentStyle.columns[i].auto) {
       columns[i].width = currentStyle.columns[i].width;
-    }
-    else {
+    } else {
       if (autoWidth > 0) columns[i].width = autoWidth;
     }
   }
@@ -797,7 +796,6 @@ function addStyleItem(target, style) {
   var newItem = target.add("item", style);
   newItem.text = decodeURI(style.name);
   newItem.subItems[0].text = style.length;
-  newItem.id = style.id;
   return newItem;
 }
 
@@ -811,7 +809,7 @@ function scrollBarOnOff(target) {
     target.visible = false;
     return;
   }
-  if (currentStyle.length > Sizes.UI_COLUMN_PANEL_COUNT) {
+  if (currentStyle.length > UI.COLUMN_PANEL_COUNT) {
     target.enabled = true;
     target.visible = true; // для старых InDesign
     target.value = 0; // перемещаем ползунок в начало
@@ -959,8 +957,7 @@ saveStyleButton.onClick = function () {
  * Удалить текущий стиль.
  */
 deleteStyleButton.onClick = function () {
-  if (columnStylesTable.selection === null || 
-      styleList.length === 0) {
+  if (columnStylesTable.selection === null || styleList.length === 0) {
     return;
   }
   // индекс выделенного стиля
@@ -982,6 +979,7 @@ deleteStyleButton.onClick = function () {
  * Обновляем текущий стиль при изменении имени.
  */
 newStyleName.onChange = function () {
+  // Перечитываем контролы и возвращаем обновленный новый стиль, чтобы не передавался по ссылке
   currentStyle = updateStyle(currentStyle.id);
 }
 
@@ -1019,7 +1017,6 @@ columnStylesTable.onChange = function () {
     scrollBarOnOff(scrollBar);
     newStyleName.text = decodeURI(currentStyle.name);
     updateCounter(columnPanel, "columns", currentStyle.columns);
-  
   } else {
     clearAll(); // если ничего не выделено, все очищаем
   }
@@ -1066,15 +1063,12 @@ downStyleButton.onClick = function () {
  * @param {ListItem} y - второй элемент.
  */
 function swapLineStyles(x, y) {
-  var tempID = x.id;
   var tempName = x.text;
   var tempLength = x.subItems[0].text;
 
-  x.id = y.id;
   x.text = y.text;
   x.subItems[0].text = y.subItems[0].text;
 
-  y.id = tempID;
   y.text = tempName;
   y.subItems[0].text = tempLength;
 }
@@ -1095,17 +1089,16 @@ clearStyleButton.onClick = function () {
  * Работа скроллбара
  */
 scrollBar.onChanging = function () {
-  columnsScrollGroup.location.x = Sizes.UI_COLUMN_PANEL_MARGIN + -this.value / 100 * (getWidthScrollGroup(currentStyle.length) - getWidthScrollGroup(Sizes.UI_COLUMN_PANEL_COUNT));
+  columnsScrollGroup.location.x = UI.COLUMN_PANEL_MARGIN + -this.value / 100 * (getWidthScrollGroup(currentStyle.length) - getWidthScrollGroup(UI.COLUMN_PANEL_COUNT));
 }
 
 /**
  * Закрываем окно и сохраняем конфиг.
  */
 window.onClose = function () {
-  config.windowLocation = [window.location[0], window.location[1]];
-  config.styleList = styleList;
   // сохраняем все стили в файл конфигурации
-  saveConfig(Script.CONFIG_FILE, config);
+  var newConfig = new Config(styleList);
+  saveConfig(Script.CONFIG_FILE, newConfig);
 }
 
 /**
